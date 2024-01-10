@@ -1,11 +1,15 @@
 import express from 'express'
 import  *as dotenv from 'dotenv';
-import usersRouter from './routes/users.js'
+import {
+    usersRouter,
+    studentRouter
+} from './routes/index.js'
 dotenv.config(); //bắt buộc 
 const app = express();
 const port =process.env.PORT || 5000
 
 app.use('/users', usersRouter)
+app.use('/students', studentRouter)
 
 app.get('/', (req, res) =>{
     res.send('response from root router')
