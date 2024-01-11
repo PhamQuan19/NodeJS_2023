@@ -6,6 +6,7 @@ import {
 } from './routes/index.js'
 dotenv.config(); //bắt buộc 
 const app = express();
+app.use(express.json())
 const port =process.env.PORT || 5000
 
 app.use('/users', usersRouter)
@@ -17,6 +18,7 @@ app.get('/', (req, res) =>{
 app.listen(port, async() =>{
     console.log(`listening on port: ${port}`)
 })
+
 
 
 

@@ -17,6 +17,7 @@ router.post('/',(req, res) =>{
 
 
 //Put or patch
+//Put khong tim thay doi tuong nao thi thoi
 router.patch('/',(req, res) =>{
     res.send('Patch(neu khong co doi tuong thi tao ra doi tuong moi) insert students')
 })
