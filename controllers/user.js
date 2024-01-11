@@ -1,4 +1,13 @@
-import { body, validationResult } from "express-validator";
+import { 
+  body,
+  validationResult
+} from "express-validator";
+
+import {
+  studentRepository,
+  userRepository,
+} from '../repositories/index.js'
+
 const login = async (req, res) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
@@ -7,6 +16,8 @@ const login = async (req, res) => {
      });
   }
   const { email, password } = req.body;
+  //call repository
+  await userRepository.login({email,password})
   res.status(200).json({
     message:'login user successfully',
     // data: "detail user ..."
@@ -14,6 +25,14 @@ const login = async (req, res) => {
 };
 
 const register =async(req, res) =>{
+  const {
+    name,
+    email,
+    password,
+    phoneNumber,
+    address
+}= req.body
+await userRepository.register({name,email,password,phoneNumber,password,address})
     res.status(201).json({
       message: 'register user successfully'
     });
