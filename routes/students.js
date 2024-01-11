@@ -1,25 +1,14 @@
 import express from 'express'
+import { studentController } from "../controllers/index.js";
 const router = express.Router()
 
-router.get('/', (req, res)=> {
-    res.send('Get students')
-})
-
+router.get('/', studentController.getAllStudents)
 //get by id
-router.get('/:id', (req, res) =>{
-    // debugger
-    res.send('Get detail student by id: '+req.params.id)
-})
-
-router.post('/',(req, res) =>{
-    res.send('Post insert students')
-})
-
-
+router.get('/:id', studentController.getStudentById)
+//insert
+router.post('/',studentController.insertStudent)
 //Put or patch
 //Put khong tim thay doi tuong nao thi thoi
-router.patch('/',(req, res) =>{
-    res.send('Patch(neu khong co doi tuong thi tao ra doi tuong moi) insert students')
-})
+router.patch('/',studentController.updateStudent)
 
 export default router
