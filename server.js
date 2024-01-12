@@ -1,11 +1,15 @@
 import express from 'express'
 import  *as dotenv from 'dotenv';
+dotenv.config(); //bắt buộc 
+
+import connect from './database/database.js';
 import {
     usersRouter,
     studentRouter
 } from './routes/index.js'
-dotenv.config(); //bắt buộc 
+
 const app = express();
+
 app.use(express.json())
 const port =process.env.PORT || 5000
 
@@ -16,6 +20,7 @@ app.get('/', (req, res) =>{
     res.send('response from root router')
 })
 app.listen(port, async() =>{
+    await connect();
     console.log(`listening on port: ${port}`)
 })
 
