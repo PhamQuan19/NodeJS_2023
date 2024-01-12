@@ -1,5 +1,6 @@
 import { 
   body,
+  param,
   validationResult
 } from "express-validator";
 
@@ -7,6 +8,14 @@ import {
   studentRepository,
   userRepository,
 } from '../repositories/index.js'
+
+import {EventEmitter} from 'node:events'
+const myEven=new EventEmitter();
+
+myEven.on('event.register.user', (params)=>{
+  console.log(`They talked about: ${JSON.stringify(params)}`)
+})
+
 
 const login = async (req, res) => {
   const error = validationResult(req);
@@ -33,6 +42,7 @@ const register =async(req, res) =>{
     address
 }= req.body
 await userRepository.register({name,email,password,phoneNumber,password,address})
+myEven.emit('event.register.user',{email, phoneNumber});
     res.status(201).json({
       message: 'register user successfully'
     });
