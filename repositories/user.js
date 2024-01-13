@@ -1,5 +1,10 @@
+import { 
+    OutputType,
+    print
+} from "../helpers/print.js"
+
 const login =async ({email, password}) =>{
-    console.log('login user in user repository haha')
+    print('login user in user repository haha', OutputType.INFORMATION)
 }
 
 const register =async ({
@@ -10,7 +15,7 @@ const register =async ({
     address
 }) =>{
 
-    console.log('register user with: name: '+name+'email'+email+'password'+password+'phone'+phoneNumber+'address'+address);
+    print('register user with: name: '+name+'email'+email+'password'+password+'phone'+phoneNumber+'address'+address, OutputType.INFORMATION);
 }
 
 export default{
