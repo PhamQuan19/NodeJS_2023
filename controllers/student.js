@@ -1,7 +1,8 @@
 import { body, validationResult } from "express-validator";
+import HttpStatusCode from "../exceptions/HttpStatusCode.js";
 async function getAllStudents(req, res){
   
-    res.status(200).json({
+    res.status(HttpStatusCode.OK).json({
         message: 'Get student succesfully',
         data:[
             {

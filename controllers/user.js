@@ -8,9 +8,10 @@ import {
   studentRepository,
   userRepository,
 } from '../repositories/index.js'
-
+import HttpStatusCode from "../exceptions/HttpStatusCode.js";
 import {EventEmitter} from 'node:events'
 const myEven=new EventEmitter();
+
 
 myEven.on('event.register.user', (params)=>{
   console.log(`They talked about: ${JSON.stringify(params)}`)
@@ -27,7 +28,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   //call repository
   await userRepository.login({email,password})
-  res.status(200).json({
+  res.status(HttpStatusCode.OK).json({
     message:'login user successfully',
     // data: "detail user ..."
   });
