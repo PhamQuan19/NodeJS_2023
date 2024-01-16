@@ -4,10 +4,23 @@ import {
 } from "../helpers/print.js"
 
 import {User} from '../models/index.js';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 import Exception from '../exceptions/Exception.js';
 const login =async ({email, password}) =>{
-    print('login user in user repository haha', OutputType.INFORMATION)
+    // print('login user in user repository haha', OutputType.INFORMATION)
+    let existingUser =await User.findOne({email}).exec();
+    if(existingUser){
+        //not encrypt pass
+        let isMatch = await bcrypt.compare(password, existingUser.password)
+        if(!!isMatch){
+            //create Java web Token
+
+        }else{
+            throw new Exception(Exception.WRONG_EMAIL_AND_PASSWORD);
+        }
+    } else{
+        throw new Exception(Exception.WRONG_EMAIL_AND_PASSWORD);
+    }
 }
 
 const register =async ({

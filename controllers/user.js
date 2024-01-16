@@ -9,7 +9,7 @@ const myEven = new EventEmitter();
 myEven.on("event.register.user", (params) => {
   console.log(`They talked about: ${JSON.stringify(params)}`);
 });
-
+//LOGIN
 const login = async (req, res) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
@@ -17,15 +17,22 @@ const login = async (req, res) => {
       error: error.array(),
     });
   }
-  const { email, password } = req.body;
-  //call repository
-  await userRepository.login({ email, password });
-  res.status(HttpStatusCode.OK).json({
-    message: "login user successfully",
-    // data: "detail user ..."
-  });
+  try {
+    const { email, password } = req.body;
+    //call repository
+    await userRepository.login({ email, password });
+    res.status(HttpStatusCode.OK).json({
+      message: "login user successfully",
+      // data: "detail user ..."
+    });
+  } catch (exception) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+      message: exception.toString(),
+    });
+  }
 };
 
+//REGISTER
 const register = async (req, res) => {
   const { name, email, password, phoneNumber, address } = req.body;
   myEven.emit("event.register.user", { email, phoneNumber });
@@ -44,7 +51,7 @@ const register = async (req, res) => {
       data: user,
     });
   } catch (exception) {
-    debugger
+    debugger;
     res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
       message: exception.toString(),
     });
