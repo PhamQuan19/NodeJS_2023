@@ -10,14 +10,14 @@ mongoose.set('strictQuery',true)
 async function connect(){
     try {
         let connection= await mongoose.connect(process.env.MONGO_URI);
-        debugger
+        // debugger
         print('connect mongoose successfully', OutputType.SUCCESS)
         // console.log('connect mongoose successfully');
         return connection;
     } catch (error) {
         // debugger
         const {cost} =error;
-        debugger
+        // debugger
         if(error.code==8000){
 
             throw new Exception(Exception.WRONG_DB_USERNAME_PASSWORD)

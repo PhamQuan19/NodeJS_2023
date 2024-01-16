@@ -7,8 +7,11 @@ import {
     usersRouter,
     studentRouter
 } from './routes/index.js'
-
+//authentication middleware
+import checkToken from './authentication/auth.js';
 const app = express();
+
+app.use(checkToken)
 
 app.use(express.json())
 const port =process.env.PORT || 5000
