@@ -1,30 +1,41 @@
 import HttpStatusCode from "../exceptions/HttpStatusCode.js";
-import { Jwt } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export default function checkToken(req, res, next) {
   //bypass login register
-//   debugger
+  //   debugger
   if (
-    req.url.toLowerCase().trim() == '/users/login'.toLowerCase().trim() ||
+    req.url.toLowerCase().trim() == "/users/login".toLowerCase().trim() ||
     req.url.toLowerCase().trim() == "/users/register".toLowerCase().trim()
   ) {
-    next()
+    next();
 
-    return
+    return;
   }
 
   //other requests
   //get and validate token
-  const token=req.headers?.authorization?.split(" ")[1];
+  const token = req.headers?.authorization?.split(" ")[1];
 
   try {
-    const jwtObject=jwt.verify(token, process.env.JWT_SECRET)
+    const jwtObject = jwt.verify(token, process.env.JWT_SECRET);
+    debugger
+    const isExpired = Date.now() >= jwtObject.exp * 1000;
+
+    if (isExpired) {
+      res.status(HttpStatusCode.BAD_REQUEST).json({
+        message: "Token is expired",
+      });
+      res.end();
+    } else {
+      next();
+      return;
+    }
   } catch (exception) {
-    res.result(HttpStatusCode.BAD_REQUEST).json({
-        message: error.message
-    })
+    res.status(HttpStatusCode.BAD_REQUEST).json({
+      message: exception.message,
+    });
   }
 
-
-  debugger
+  // debugger
 }
