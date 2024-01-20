@@ -52,10 +52,17 @@ async function insertStudent(req,res){
         })
     }
 }
-
+async function generateFakeStudents(req,res){
+    await studentRepository.generateFakeStudents(req.body)
+    res.status(HttpStatusCode.INSERT_OK).json({
+        message: 'Insert fake student successfully',
+    })
+}
 export default{
     getAllStudents,
     getStudentById,
     updateStudent,
-    insertStudent
+    insertStudent,
+    generateFakeStudents
+    
 }

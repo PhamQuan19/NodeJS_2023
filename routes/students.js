@@ -11,4 +11,8 @@ router.post('/',studentController.insertStudent)
 //Put khong tim thay doi tuong nao thi thoi
 router.patch('/',studentController.updateStudent)
 
+
+router.post('/generateFakeStudents',studentController.generateFakeStudents)
+
+
 export default router
