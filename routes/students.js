@@ -12,7 +12,7 @@ router.post('/',studentController.insertStudent)
 router.patch('/',studentController.updateStudent)
 
 
-router.post('/generateFakeStudents',studentController.generateFakeStudents)
+// router.post('/generateFakeStudents',studentController.generateFakeStudents)
 
 
 export default router

@@ -1,28 +1,29 @@
 import { body, validationResult } from "express-validator";
 import HttpStatusCode from "../exceptions/HttpStatusCode.js";
-import {studentRepository} from '../repositories/index.js'
+import {studentRepository} from '../repositories/index.js';
+import { MAX_RECORDS } from "../Global/constants.js";
+
 async function getAllStudents(req, res){
-  
-    res.status(HttpStatusCode.OK).json({
-        message: 'Get student succesfully',
-        data:[
-            {
-                name:'Pham Quan',
-                email:'phamquan@gmail.com',
-                age: 22
-            },
-            {
-                name:'Pham Duc',
-                email:'phamduc@gmail.com',
-                age: 20
-            },
-            {
-                name:'Pham Anh',
-                email:'phamanh@gmail.com',
-                age: 23
-            }
-        ]
-    })  
+    //http:localhost: 3000?page=1&size =100
+    let {page=1, size=MAX_RECORDS, searchString=''}=req.query
+    size =size >= MAX_RECORDS ? MAX_RECORDS :size
+    try {
+        let filtereStudents=await studentRepository.getAllStudents({
+            size, page, searchString 
+        })
+        res.status(HttpStatusCode.OK).json({
+            message: 'Get student succesfully',
+            size: filtereStudents.length,
+            page,
+            searchString,
+            data:filtereStudents,
+        })  
+    } catch (exception) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+            message:exception.message
+        })
+    }
+
 
     //bao loi 500
     // res.status(500).json({
